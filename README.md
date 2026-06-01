@@ -10,6 +10,10 @@ Transforme o caos do seu prédio em dados acionáveis. Ocorrências em tempo rea
 
 ---
 
+> ⚠️ **Aviso**: Esta aplicação é **exclusivamente para fins pedagógicos e didáticos**. É uma brincadeira, um exercício de desenvolvimento de software. Não deve ser levada a sério nem utilizada em condomínios reais. **Não incentivamos brigas, fofocas ou rivalidades entre vizinhos** — a sátira é apenas uma ferramenta criativa para tornar o aprendizado mais divertido. Respeito e boa convivência sempre em primeiro lugar. 🏡❤️
+
+---
+
 ## ✨ Features
 
 - 📝 **Ocorrências** — Registre barulho, festa, vazamento, fofoca, briga, animal solto
