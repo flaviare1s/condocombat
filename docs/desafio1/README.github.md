@@ -143,7 +143,7 @@ Vá em **Settings → Secrets and variables → Actions** e adicione:
 
 ### Passo 6 — Criar Workflow GitHub Actions
 
-Crie o diretório `.github/workflows/` na **raiz do repositório** (não dentro de `landing/`) e adicione `deploy-landing.yml`:
+Crie o diretório `.github/workflows/` na **raiz do repositório** (não dentro de `landing/`) e adicione `deploy-landing.yaml`:
 
 ```yaml
 name: Deploy Landing Page
@@ -153,7 +153,7 @@ on:
     branches: [main, master]
     paths:
       - 'landing/**'
-      - '.github/workflows/deploy-landing.yml'
+      - '.github/workflows/deploy-landing.yaml'
   workflow_dispatch:
 
 env:
@@ -169,10 +169,10 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
           cache: 'npm'
@@ -190,7 +190,7 @@ jobs:
           PUBLIC_APP_URL: ${{ secrets.PUBLIC_APP_URL }}
 
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: landing-dist
           path: landing/dist/
@@ -202,15 +202,15 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: ${{ env.NODE_VERSION }}
 
       - name: Download build artifact
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: landing-dist
           path: landing/dist/
