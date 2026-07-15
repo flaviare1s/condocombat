@@ -215,7 +215,7 @@ CMD ["node", "server.js"]
 
 ### Passo 5 — Criar docker-compose.yml
 
-Crie `docker-compose.yml` na **raiz do projeto**:
+Crie `docker-compose.yaml` na **raiz do projeto**:
 
 ```yaml
 # =============================================================================
@@ -549,7 +549,7 @@ Após as pipelines concluírem:
    - `seu-usuario/condocombat-frontend:latest`
 3. Teste o docker-compose com as imagens publicadas:
    ```bash
-   # Atualize o docker-compose.yml com seu username
+   # Atualize o docker-compose.yaml com seu username
    docker compose pull
    docker compose up -d
    ```

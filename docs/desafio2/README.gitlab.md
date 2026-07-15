@@ -218,7 +218,7 @@ CMD ["node", "server.js"]
 
 ### Passo 5 — Criar docker-compose.yml
 
-Crie `docker-compose.yml` na **raiz do projeto**:
+Crie `docker-compose.yaml` na **raiz do projeto**:
 
 ```yaml
 # =============================================================================
@@ -543,7 +543,7 @@ Após a pipeline concluir:
    - `seu-usuario/condocombat-frontend:latest`
 3. Teste o docker-compose com as imagens publicadas:
    ```bash
-   # Atualize o docker-compose.yml com seu username
+   # Atualize o docker-compose.yaml com seu username
    docker compose pull
    docker compose up -d
    ```
@@ -555,7 +555,7 @@ Após a pipeline concluir:
 | Critério | Peso | Descrição |
 |----------|------|-----------|
 | Dockerfiles multi-stage corretos | 20% | Backend (2 stages) + Frontend (3 stages) com cache otimizado |
-| docker-compose.yml funcional | 15% | 3 serviços (db, api, web) com health checks e dependências |
+| docker-compose.yaml funcional | 15% | 3 serviços (db, api, web) com health checks e dependências |
 | Pipeline Backend (lint→test→build→push) | 20% | Executa na branch main, só em mudanças em `backend/**` |
 | Pipeline Frontend (lint→test→build→push) | 20% | Executa na branch main, só em mudanças em `frontend/**` |
 | Pipeline principal com include + rules:changes | 15% | `.gitlab-ci.yml` inclui os 2 arquivos e filtra corretamente |
