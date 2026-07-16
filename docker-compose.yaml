@@ -22,6 +22,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    # Mesma política de api e web: sem isto, um reboot sobe a api sem o banco
+    # (depends_on só vale no `compose up`) e ela entra em crash loop.
+    restart: unless-stopped
 
   # Backend API (FastAPI)
   api:
