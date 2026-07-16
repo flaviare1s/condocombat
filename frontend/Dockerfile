@@ -34,8 +34,11 @@ FROM node:20-alpine AS runner
 
 WORKDIR /app
 
-# Instala dependências de runtime (mínimas)
-RUN npm add next@latest
+ENV NODE_ENV=production
+# O server.js do standalone lê HOSTNAME para escolher o bind, e o Docker define
+# essa variável como o ID do container — sem isso, escuta num host inalcançável.
+ENV HOSTNAME=0.0.0.0
+ENV PORT=3000
 
 # Cria usuário não-root
 RUN addgroup --system --gid 1001 nodejs
@@ -52,7 +55,7 @@ USER nextjs
 # Expõe porta e health check
 EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:3000 || exit 1
+  CMD node -e "require('http').get('http://localhost:3000',r=>process.exit(r.statusCode<400?0:1)).on('error',()=>process.exit(1))"
 
 # Inicia servidor Next.js
 CMD ["node", "server.js"]
