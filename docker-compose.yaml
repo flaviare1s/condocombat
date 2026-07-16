@@ -1,0 +1,63 @@
+# =============================================================================
+# CondoCombat — Docker Compose (Backend + Frontend + Database)
+# =============================================================================
+
+services:
+  # PostgreSQL Database
+  db:
+    image: postgres:16-alpine
+    container_name: condocombat-db
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-condocombat}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-condocombat}
+      POSTGRES_DB: ${POSTGRES_DB:-condocombat}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      # Host 5433: a 5432 já é usada por um PostgreSQL local. Dentro da rede do
+      # compose a api segue falando com db:5432 — só o acesso pelo host muda.
+      - "5433:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-condocombat}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Backend API (FastAPI)
+  api:
+    image: ${DOCKERHUB_USERNAME}/condocombat-backend:latest
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: condocombat-api
+    environment:
+      DATABASE_URL: postgresql+asyncpg://${POSTGRES_USER:-condocombat}:${POSTGRES_PASSWORD:-condocombat}@db:5432/${POSTGRES_DB:-condocombat}
+      SECRET_KEY: ${SECRET_KEY}
+    ports:
+      # Host 8001: a 8000 já é usada por um Apache local. O container segue
+      # escutando na 8000 — EXPOSE, healthcheck e uvicorn não mudam.
+      - "8001:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # Frontend (Next.js)
+  web:
+    image: ${DOCKERHUB_USERNAME}/condocombat-frontend:latest
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: condocombat-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:8001
+    ports:
+      - "3000:3000"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+    driver: local
+    

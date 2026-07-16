@@ -35,3 +35,26 @@ def mock_session():
     session.close = AsyncMock()
     session.flush = AsyncMock()
     return session
+
+
+@pytest.fixture
+async def async_session():
+    """Sessão async real contra SQLite em memória, para testes de ORM.
+
+    Cria o schema a partir do Base.metadata a cada teste, garantindo
+    isolamento entre eles.
+    """
+    from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
+
+    from app import models  # noqa: F401 — importa os modelos para popular Base.metadata
+    from app.database import Base
+
+    engine = create_async_engine("sqlite+aiosqlite:///:memory:")
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+
+    maker = async_sessionmaker(engine, expire_on_commit=False)
+    async with maker() as session:
+        yield session
+
+    await engine.dispose()

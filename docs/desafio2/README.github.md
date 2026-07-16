@@ -2,12 +2,12 @@
 
 ## 🎯 Objetivo
 
-Criar **Dockerfiles** e um **docker-compose.yml** para o backend (FastAPI) e frontend (Next.js) do CondoCombat, e configurar **2 pipelines separadas** de **Integração Contínua (CI)** no GitHub Actions que executam lint, testes, build e push das imagens para o **DockerHub**.
+Criar **Dockerfiles** e um **docker-compose.yaml** para o backend (FastAPI) e frontend (Next.js) do CondoCombat, e configurar **2 pipelines separadas** de **Integração Contínua (CI)** no GitHub Actions que executam lint, testes, build e push das imagens para o **DockerHub**.
 
 As pipelines devem:
 
-1. **Pipeline do Backend** (`.github/workflows/backend.yml`): Executar lint (Ruff) → testes (pytest) → build Docker → push DockerHub
-2. **Pipeline do Frontend** (`.github/workflows/frontend.yml`): Executar lint (ESLint) → testes (Vitest) → build Docker → push DockerHub
+1. **Pipeline do Backend** (`.github/workflows/backend.yaml`): Executar lint (Ruff) → testes (pytest) → build Docker → push DockerHub
+2. **Pipeline do Frontend** (`.github/workflows/frontend.yaml`): Executar lint (ESLint) → testes (Vitest) → build Docker → push DockerHub
 3. **Rodar localmente** com Docker Compose usando as imagens publicadas
 
 Pipelines configuradas como **arquivos separados** no GitHub Actions.
@@ -213,9 +213,9 @@ CMD ["node", "server.js"]
 
 ---
 
-### Passo 5 — Criar docker-compose.yml
+### Passo 5 — Criar docker-compose.yaml
 
-Crie `docker-compose.yml` na **raiz do projeto**:
+Crie `docker-compose.yaml` na **raiz do projeto**:
 
 ```yaml
 # =============================================================================
@@ -301,7 +301,7 @@ python -c 'import secrets; print(secrets.token_urlsafe(32))'
 
 ### Passo 7 — Criar Pipeline do Backend
 
-Crie o arquivo `.github/workflows/backend.yml`:
+Crie o arquivo `.github/workflows/backend.yaml`:
 
 ```yaml
 # =============================================================================
@@ -398,7 +398,7 @@ jobs:
 
 ### Passo 8 — Criar Pipeline do Frontend
 
-Crie o arquivo `.github/workflows/frontend.yml`:
+Crie o arquivo `.github/workflows/frontend.yaml`:
 
 ```yaml
 # =============================================================================
@@ -549,7 +549,7 @@ Após as pipelines concluírem:
    - `seu-usuario/condocombat-frontend:latest`
 3. Teste o docker-compose com as imagens publicadas:
    ```bash
-   # Atualize o docker-compose.yml com seu username
+   # Atualize o docker-compose.yaml com seu username
    docker compose pull
    docker compose up -d
    ```

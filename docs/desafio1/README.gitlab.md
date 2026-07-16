@@ -139,9 +139,9 @@ Vá em **Settings → CI/CD → Variables** e adicione:
 
 ---
 
-### Passo 6 — Criar Pipeline `.gitlab-ci.yml`
+### Passo 6 — Criar Pipeline `.gitlab-ci.yaml`
 
-Crie o arquivo `.gitlab-ci.yml` na **raiz do repositório**:
+Crie o arquivo `.gitlab-ci.yaml` na **raiz do repositório**:
 
 ```yaml
 image: node:20
@@ -277,7 +277,7 @@ Após a pipeline concluir:
    only:
      changes:
        - landing/**/*
-       - .gitlab-ci.yml
+       - .gitlab-ci.yaml
    ```
 2. **Netlify CLI**: Instale como dev dependency (`npm install -D netlify-cli`) para versão fixa no `package.json`.
 3. **Teste em draft primeiro**: Faça deploy sem `--prod` para verificar antes de publicar.

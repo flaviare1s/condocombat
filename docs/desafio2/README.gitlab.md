@@ -2,13 +2,13 @@
 
 ## 🎯 Objetivo
 
-Criar **Dockerfiles** e um **docker-compose.yml** para o backend (FastAPI) e frontend (Next.js) do CondoCombat, e configurar **3 arquivos de pipeline** de **Integração Contínua (CI)** no GitLab CI/CD que executam lint, testes, build e push das imagens para o **DockerHub**.
+Criar **Dockerfiles** e um **docker-compose.yaml** para o backend (FastAPI) e frontend (Next.js) do CondoCombat, e configurar **3 arquivos de pipeline** de **Integração Contínua (CI)** no GitLab CI/CD que executam lint, testes, build e push das imagens para o **DockerHub**.
 
 As pipelines devem:
 
-1. **Pipeline do Backend** (`.gitlab-ci/backend.yml`): Executar lint (Ruff) → testes (pytest) → build Docker → push DockerHub
-2. **Pipeline do Frontend** (`.gitlab-ci/frontend.yml`): Executar lint (ESLint) → testes (Vitest) → build Docker → push DockerHub
-3. **Arquivo principal** (`.gitlab-ci.yml`): Incluir os dois pipelines com `include:` e filtrar por `rules:changes`
+1. **Pipeline do Backend** (`.gitlab-ci/backend.yaml`): Executar lint (Ruff) → testes (pytest) → build Docker → push DockerHub
+2. **Pipeline do Frontend** (`.gitlab-ci/frontend.yaml`): Executar lint (ESLint) → testes (Vitest) → build Docker → push DockerHub
+3. **Arquivo principal** (`.gitlab-ci.yaml`): Incluir os dois pipelines com `include:` e filtrar por `rules:changes`
 4. **Rodar localmente** com Docker Compose usando as imagens publicadas
 
 Pipelines configuradas como **arquivos separados** no GitLab CI/CD.
@@ -216,9 +216,9 @@ CMD ["node", "server.js"]
 
 ---
 
-### Passo 5 — Criar docker-compose.yml
+### Passo 5 — Criar docker-compose.yaml
 
-Crie `docker-compose.yml` na **raiz do projeto**:
+Crie `docker-compose.yaml` na **raiz do projeto**:
 
 ```yaml
 # =============================================================================
@@ -280,9 +280,9 @@ volumes:
 
 ---
 
-### Passo 6 — Criar Arquivo Principal `.gitlab-ci.yml`
+### Passo 6 — Criar Arquivo Principal `.gitlab-ci.yaml`
 
-Crie `.gitlab-ci.yml` na **raiz do repositório**:
+Crie `.gitlab-ci.yaml` na **raiz do repositório**:
 
 ```yaml
 # =============================================================================
@@ -296,8 +296,8 @@ stages:
 
 # Inclui pipelines modulares
 include:
-  - local: '.gitlab-ci/backend.yml'
-  - local: '.gitlab-ci/frontend.yml'
+  - local: '.gitlab-ci/backend.yaml'
+  - local: '.gitlab-ci/frontend.yaml'
 
 # Variáveis globais
 variables:
@@ -309,7 +309,7 @@ variables:
 
 ### Passo 7 — Criar Pipeline do Backend
 
-Crie o diretório `.gitlab-ci/` e dentro dele o arquivo `backend.yml`:
+Crie o diretório `.gitlab-ci/` e dentro dele o arquivo `backend.yaml`:
 
 ```yaml
 # =============================================================================
@@ -388,7 +388,7 @@ build:
 
 ### Passo 8 — Criar Pipeline do Frontend
 
-Crie o arquivo `.gitlab-ci/frontend.yml`:
+Crie o arquivo `.gitlab-ci/frontend.yaml`:
 
 ```yaml
 # =============================================================================
@@ -543,7 +543,7 @@ Após a pipeline concluir:
    - `seu-usuario/condocombat-frontend:latest`
 3. Teste o docker-compose com as imagens publicadas:
    ```bash
-   # Atualize o docker-compose.yml com seu username
+   # Atualize o docker-compose.yaml com seu username
    docker compose pull
    docker compose up -d
    ```
@@ -555,10 +555,10 @@ Após a pipeline concluir:
 | Critério | Peso | Descrição |
 |----------|------|-----------|
 | Dockerfiles multi-stage corretos | 20% | Backend (2 stages) + Frontend (3 stages) com cache otimizado |
-| docker-compose.yml funcional | 15% | 3 serviços (db, api, web) com health checks e dependências |
+| docker-compose.yaml funcional | 15% | 3 serviços (db, api, web) com health checks e dependências |
 | Pipeline Backend (lint→test→build→push) | 20% | Executa na branch main, só em mudanças em `backend/**` |
 | Pipeline Frontend (lint→test→build→push) | 20% | Executa na branch main, só em mudanças em `frontend/**` |
-| Pipeline principal com include + rules:changes | 15% | `.gitlab-ci.yml` inclui os 2 arquivos e filtra corretamente |
+| Pipeline principal com include + rules:changes | 15% | `.gitlab-ci.yaml` inclui os 2 arquivos e filtra corretamente |
 | Variáveis CI/CD configuradas no GitLab | 10% | DOCKERHUB_USERNAME, DOCKERHUB_TOKEN, SECRET_KEY, etc. |
 
 ---

@@ -18,7 +18,7 @@ A pipeline deve executar **4 etapas** para cada aplicação:
 
 ## ⚠️ Aviso
 
-**Não há etapa de deploy.** A pipeline termina no push das imagens para o DockerHub. Os `Dockerfile` e `docker-compose.yml` serão criados por você seguindo os guias nos arquivos específicos de cada plataforma.
+**Não há etapa de deploy.** A pipeline termina no push das imagens para o DockerHub. Os `Dockerfile` e `docker-compose.yaml` serão criados por você seguindo os guias nos arquivos específicos de cada plataforma.
 
 Escolha a plataforma desejada abaixo:
 
