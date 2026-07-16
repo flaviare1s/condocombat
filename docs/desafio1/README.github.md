@@ -238,7 +238,7 @@ O job `cd` só executa se o `ci` passar (`needs: ci`).
 
 **Gatilhos (`on.push.paths`):**
 - `landing/**` — qualquer arquivo da landing page
-- `.github/workflows/deploy-landing.yml` — o próprio workflow
+- `.github/workflows/deploy-landing.yaml` — o próprio workflow
 
 Isso evita rodar a pipeline quando outras partes do monorepo (backend, frontend) são alteradas.
 
